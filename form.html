@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>::resume builder::</title>
+	<link rel="stylesheet" type="text/css" href="form.css">
+</head>
+<body id="form">
+	<div class="main">
+		<div class="subdiv1">
+			<h2>Resume Form</h2>
+			<h2>CAREER OBJECTIVE</h2>
+			<select name="career" id="career">
+				<option> Select Your Career Objective</option>
+			<option> Position in reputateted company</option>
+		<option>I want to attain a position in very reputated company </option>
+			</select>
+		</div>
+		<div class="subdiv2"> 
+			<h2>PERSONAL DETAILS</h2>
+			<input type="text" name="name" id="name" placeholder="Enter Your Name"><br>
+			<input type="number" name="roll" id="roll" placeholder="Enter Your Roll"><br>
+			<input type="email" name="email" id="email" placeholder="Enter Your Email"><br>
+			<input type="number" name="number" id="number" placeholder="Enter Your Number"><br>
+
+			<input type="place" name="place" id="place" placeholder="Enter Your Place">
+
+		</div>
+		<div class="subdiv2">
+				<h2>PG DETAILS</h2>
+				<select name="pg degree" id="pgdegree">
+					<option>Please Select your Degree</option>
+					<option>M.com</option>
+					<option>M.TECH</option>
+					<option>MBA</option>
+					<option>MCA</option>
+					<option>MD</option>
+				</select><br>
+				<input type="text" name="pginstitute" id="pgins" placeholder="Enter your College Name"><br>
+				<input type="text" name="pgper" id="pgper" placeholder="Enter Your Percentage Here"><br>
+				<input type="text" name="pgyop" id="pgyop" placeholder="Enter Your Passedout Year here">
+		 </div>
+		<div class="subdiv2">
+			<h2>UG DETAILS</h2>
+				<select name="UGDegree" id="ugdegree">
+					<option>please Select your Degree</option>
+					<option>B.com</option>
+					<option>B.Tech</option>
+					<option>Mda</option>
+					<option>b.sc</option>
+					<option>llb</option>
+				</select><br>
+				<input type="text" name="uginstitute" id="ugins" placeholder="Enter Your College Name"><br>
+				<input type="text" name="ugper" id="ugper" placeholder="Enter Your Percentage Here"><br>
+				<input type="text" name="ugyop" id="ugyop" placeholder="Enter Your Passedout Year Here">
+		 </div>
+		<div class="subdiv2">
+			<h2>+2 DETAILS</h2>
+				<select name="inter" id="inter">
+					<option>please select ur degree</option>
+					<option>intermidiate</option>
+					<option>diploma</option>
+					
+				</select><br>
+				<input type="text" name="inter" id="interins" placeholder="Enter Your College Name"><br>
+				<input type="text" name="interper" id="interper" placeholder="Enter Your Percentage Here"><br>
+				<input type="text" name="interyop" id="interyop" placeholder="Enter Your Passedot Year Here">
+		 </div>
+		 </div>
+		<div class="subdiv2"> 
+				<h2>SSC DETAILS</h2>
+				<select name="ssc" id="ssc">
+					<option>please select ur degree</option>
+					<option>s.s.c</option>
+					<option>cbse</option>
+					
+				</select><br>
+				<input type="text" name="sscinstitute" id="sscins" placeholder="Enter Your College Name"><br>
+				<input type="text" name="sscper" id="sscper" placeholder="Enter Your Percentage Here"><br>
+				<input type="text" name="sscyop" id="sscyop" placeholder="Enter Your Passedout Year Here">
+		
+		</div>
+		
+		<button id="submit" name="button" onclick="submit()">submit</button>
+</body>
+		
+</html>
+<script type="text/javascript">
+	function submit(){
+			var career =document.getElementById("career").value;
+			var name=document.getElementById("name").value;
+			var roll=document.getElementById("roll").value;
+			var email=document.getElementById("email").value;
+			var phno  =document.getElementById("number").value;
+			var place=document.getElementById("place").value;
+
+			var pgins=document.getElementById("pgins").value;
+			var pgper=document.getElementById("pgper").value;
+			var pgyop=document.getElementById("pgyop").value;
+			var pgdegree=document.getElementById("pgdegree").value;
+
+			var ugins=document.getElementById("ugins").value;
+			var ugper=document.getElementById("ugper").value;
+			var ugyop=document.getElementById("ugyop").value;
+			var ugdegree=document.getElementById("ugdegree").value;
+
+
+			var inter=document.getElementById("inter").value;
+			var interins=document.getElementById("interins").value;
+			var interper=document.getElementById("interper").value;
+			var interyop=document.getElementById("interyop").value;
+
+			 var ssc=document.getElementById("ssc").value;
+			var sscins=document.getElementById("sscins").value;
+			var sscper=document.getElementById("sscper").value;
+			var sscyop=document.getElementById("sscyop").value;
+
+			var indexedDB=window.indexedDB ||window.mozIndexedDB ||
+			   window.webkitIndexedDB || window.msIndexedDB;
+			   indexedDB? console.log("suceess"): console.log("error");
+			var open;
+			var result;
+			var store;
+			var tx;
+			var  request = indexedDB.open("database",1);
+			request.onupgradeneeded=function(e){
+					open=e.target.result;
+					store=open.createObjectStore("resumedata",{keyPath:"name"});
+
+
+			}
+
+	
+	request.onerror=function(e){
+		console.log("error"+e);
+
+	}
+	request.onsuccess = function(e){
+		open=e.target.result;
+		tx=open.transaction("resumedata","readwrite");
+		store = tx.objectStore("resumedata");
+		store.put({
+			car:career,
+			name:name,
+			rollno:roll,
+			mail:email,
+			mobile:phno,
+			native:place,
+			education:[
+				{
+					degree:pgdegree,
+					inst:pgins,
+					Per:pgper,
+					yop:pgyop
+				},
+				{
+
+					degree:ugdegree,
+					inst:ugins,
+					Per:ugper,
+					yop:ugyop
+
+				},
+				{
+
+					degree:inter,
+					inst:interins,
+					Per:interper,
+					yop:interyop
+				},
+				{
+					degree:ssc,
+					inst:sscins,
+					Per:sscper,
+					yop:sscyop
+
+
+				}
+			]
+
+		})
+	}
+	window.open("index.html","_self");
+}
+
+
+
+	
+</script>
